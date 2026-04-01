@@ -50,6 +50,13 @@ class Settings(BaseSettings):
     s3_bucket_name: str = "recipedb-media"
     s3_region: str = "us-east-1"
 
+    # APNs (push notifications)
+    apns_key_id: str = ""
+    apns_team_id: str = ""
+    apns_bundle_id: str = ""
+    apns_key_path: str = "/app/apns.p8"
+    apns_production: bool = False
+
     # CORS
     allowed_origins: list[str] = ["*"]
 
