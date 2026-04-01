@@ -1,0 +1,29 @@
+# Secrets — never commit these
+.env
+*.env
+
+# Postgres data volume (if you ever bind-mount locally)
+postgres_data/
+backups/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+dist/
+.pytest_cache/
+.mypy_cache/
+
+# Xcode / iOS
+ios/build/
+ios/*.xcworkspace/xcuserdata/
+ios/Pods/
+*.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
