@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
 from app.redis_client import close_redis, get_redis
-from app.routers import auth, recipes
+from app.routers import auth, recipes, groups
 
 settings = get_settings()
 
@@ -37,6 +37,7 @@ app.add_middleware(
 # Routers
 app.include_router(auth.router,    prefix="/api/v1")
 app.include_router(recipes.router, prefix="/api/v1")
+app.include_router(groups.router,  prefix="/api/v1")
 
 
 @app.get("/health")
