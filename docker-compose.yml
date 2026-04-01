@@ -169,6 +169,8 @@ volumes:
     driver: local
   redis_data:
     driver: local
+  minio_data:
+    driver: local
   pgadmin_data:
     driver: local
 
@@ -179,3 +181,27 @@ networks:
   backend:
     driver: bridge
     name: recipeapp_backend
+
+  # ---------------------------------------------------------------------------
+  # MinIO — self-hosted S3-compatible object storage
+  # ---------------------------------------------------------------------------
+  minio:
+    image: minio/minio:latest
+    container_name: recipedb_minio
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER:     ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?MINIO_ROOT_PASSWORD must be set}
+    volumes:
+      - minio_data:/data
+    ports:
+      - "127.0.0.1:9000:9000"   # S3 API
+      - "127.0.0.1:9001:9001"   # MinIO web console
+    networks:
+      - backend
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
